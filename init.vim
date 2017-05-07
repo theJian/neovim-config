@@ -1,5 +1,14 @@
-"--- General -----------------------------------------------
+"--- General -------------------------------------------------------------------
+
+" compatible options
+set cpoptions+=n
+set cpoptions+=y
+set cpoptions-=;
+
+" indent
 set cindent
+
+" mouse
 set mouse=nc
 
 " open new splits on the right/bottom
@@ -38,12 +47,81 @@ augroup Mkdir
 		\ endif
 augroup END
 
-"--- User Interface ---------------------------------------
+"--- User Interface ------------------------------------------------------------
 " colorscheme
 set background=dark
 colorscheme gotham
 
-"--- Key Mapping ------------------------------------------
+" true color
+set termguicolors
+
+" show invisible chars
+set list
+set listchars=tab:›\ ,trail:•,extends:§,nbsp:•
+highlight NonText    ctermfg=12
+highlight SpecialKey ctermfg=12
+
+" show match
+set showmatch
+set matchtime=2
+
+" highlight comment
+highlight Comment cterm=italic
+
+" matches highlighting colors
+hi MatchParen cterm=underline ctermbg=none ctermfg=LightGreen gui=underline guibg=NONE guifg=LightGreen
+
+" folded highlighting colors
+hi Folded ctermbg=none ctermfg=DarkCyan guibg=NONE guifg=DarkCyan
+
+" font
+set guifont=Inconsolata:h16
+
+" simplify gui
+set guioptions=av
+
+" statusline
+set statusline=%f " file path
+set statusline+=%1*%m%*%r%h%w "file info
+set statusline+=%= "switch to the right side
+set statusline+=(%{&ff}/%Y) " file type
+set statusline+=\  " separator
+set statusline+=(line\ %l\/%L,\ col\ %c) " cusor position
+set statusline+=\  " seperator
+set statusline+=%<%P " percentage
+" highlight modified flag
+highlight User1 ctermfg=red guifg=red
+
+" highlight cursor position
+set cursorcolumn
+set cursorline
+
+" minimal number of screen lines to keep
+set scrolloff=2
+
+" only have cursorline in current window
+autocmd WinLeave * set nocursorline
+autocmd WinLeave * set nocursorcolumn
+autocmd WinEnter * set cursorline
+autocmd WinEnter * set cursorcolumn
+
+" show line number
+set number
+set relativenumber
+
+" add a colored line at 81 column
+set colorcolumn=81
+
+" solid window split border
+set fillchars+=vert:\ 
+
+" dotted folded line
+set fillchars+=fold:┄
+
+" wrapped line mark
+set showbreak=↪\ \ \ 
+
+"--- Key Mapping ---------------------------------------------------------------
 " leader
 let mapleader="\<space>"
 
@@ -57,15 +135,27 @@ nnoremap k gk
 " save
 nnoremap <leader>w :<C-u>w<CR>
 
+" edit
+nnoremap <leader>e :e <C-R>=expand("%:h") . "/" <CR>
+
 " insert empty line
-nnoremap <C-CR> o<Esc>
-nnoremap <C-CR> O<Esc>
+nnoremap <CR> o<Esc>
+inoremap <C-j>  <Esc>o
 inoremap <C-CR> o<Esc>
 inoremap <C-CR> O<Esc>
 
 " split window
 nnoremap <leader>h :<C-u>split<CR>
 nnoremap <leader>v :<C-u>vsplit<CR>
+
+" copy/paste/cut
+vnoremap <leader>y "+y
+nnoremap <leader>p "+p
+vnoremap <leader>p "+p
+vnoremap <leader>x "+x
+vnoremap <silent> y y`]
+vnoremap <silent> p p`]
+nnoremap <silent> p p`]
 
 " close buffer
 nnoremap <leader>q :<C-u>bd<CR>
@@ -79,8 +169,58 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <C-h> <C-w>h
 
+" shifting
+vnoremap < <gv
+vnoremap > >gv
+
 " move visual block
 vnoremap J :<C-u>m '>+1<CR>gv=gv
 vnoremap K :<C-u>m '<-2<CR>gv=gv
 
+" select last changed text
+nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
+"--- Files Specified -----------------------------------------------------------
+" Python
+augroup file_python
+	autocmd!
+	autocmd BufNewFile,BufRead *.py set tabstop=4
+	autocmd BufNewFile,BufRead *.py set softtabstop=4
+	autocmd BufNewFile,BufRead *.py set shiftwidth=4
+	autocmd BufNewFile,BufRead *.py set expandtab
+	autocmd BufNewFile *.py
+				\ 0put = '#!/usr/bin/python3' |
+				\ 1put = '#-*- coding: utf-8 -*-' |
+augroup END
+
+" JavaScript
+augroup file_js_css_html
+	autocmd!
+	autocmd BufNewFile,BufRead *.js,*.html,*.css set tabstop=2
+	autocmd BufNewFile,BufRead *.js,*.html,*.css set softtabstop=2
+	autocmd BufNewFile,BufRead *.js,*.html,*.css set shiftwidth=2
+	autocmd BufNewFile,BufRead *.js,*.html,*.css set expandtab
+augroup END
+
+" Elm
+augroup file_elm
+	autocmd!
+	autocmd BufNewFile,BufRead *.elm set tabstop=4
+	autocmd BufNewFile,BufRead *.elm set softtabstop=4
+	autocmd BufNewFile,BufRead *.elm set shiftwidth=4
+augroup END
+
+augroup HelpInTabs
+	autocmd!
+	autocmd BufEnter *.txt call HelpInNewTab()
+augroup END
+
+" Only apply to help files
+function! HelpInNewTab()
+	if &buftype == 'help'
+		" convert help window to tab
+		execute "normal \<C-W>T"
+	endif
+endfunction
+
+"--- Plugin Settings -----------------------------------------------------------

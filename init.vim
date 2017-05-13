@@ -1,12 +1,11 @@
-"--- General -------------------------------------------------------------------
-
+"─── General ───────────────────────────────────────────────────────────────────
 " compatible options
 set cpoptions+=n
 set cpoptions+=y
 set cpoptions-=;
 
 " indent
-set cindent
+set smartindent
 
 " mouse
 set mouse=nc
@@ -47,7 +46,7 @@ augroup Mkdir
 		\ endif
 augroup END
 
-"--- User Interface ------------------------------------------------------------
+"─── User Interface ────────────────────────────────────────────────────────────
 " colorscheme
 set background=dark
 colorscheme gotham
@@ -121,7 +120,7 @@ set fillchars+=fold:┄
 " wrapped line mark
 set showbreak=↪\ \ \ 
 
-"--- Key Mapping ---------------------------------------------------------------
+"─── Key Mapping ───────────────────────────────────────────────────────────────
 " leader
 let mapleader="\<space>"
 
@@ -180,27 +179,18 @@ vnoremap K :<C-u>m '<-2<CR>gv=gv
 " select last changed text
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
-"--- Files Specified -----------------------------------------------------------
+"─── Files Specified ───────────────────────────────────────────────────────────
 " Python
-augroup file_python
-	autocmd!
-	autocmd BufNewFile,BufRead *.py set tabstop=4
-	autocmd BufNewFile,BufRead *.py set softtabstop=4
-	autocmd BufNewFile,BufRead *.py set shiftwidth=4
-	autocmd BufNewFile,BufRead *.py set expandtab
-	autocmd BufNewFile *.py
-				\ 0put = '#!/usr/bin/python3' |
-				\ 1put = '#-*- coding: utf-8 -*-' |
-augroup END
+autocmd FileType python setlocal tabstop=4 set softtabstop=4 shiftwidth=4 expandtab
 
 " JavaScript
-augroup file_js_css_html
-	autocmd!
-	autocmd BufNewFile,BufRead *.js,*.html,*.css set tabstop=2
-	autocmd BufNewFile,BufRead *.js,*.html,*.css set softtabstop=2
-	autocmd BufNewFile,BufRead *.js,*.html,*.css set shiftwidth=2
-	autocmd BufNewFile,BufRead *.js,*.html,*.css set expandtab
-augroup END
+autocmd FileType javascript setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+
+" CSS
+autocmd FileType css setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+
+" HTML
+autocmd FileType html setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 
 " Elm
 augroup file_elm
@@ -215,7 +205,7 @@ augroup HelpInTabs
 	autocmd BufEnter *.txt call HelpInNewTab()
 augroup END
 
-" Only apply to help files
+" only apply to help files
 function! HelpInNewTab()
 	if &buftype == 'help'
 		" convert help window to tab
@@ -223,4 +213,16 @@ function! HelpInNewTab()
 	endif
 endfunction
 
-"--- Plugin Settings -----------------------------------------------------------
+"─── Plugin Settings ───────────────────────────────────────────────────────────
+" run deoplete at start up
+let g:deoplete#enable_at_startup = 1
+
+" deoplete key mapping
+inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : deoplete#mappings#manual_complete()
+function! s:check_back_space() abort "{{{
+	let col = col('.') - 1
+	return !col || getline('.')[col - 1]  =~ '\s'
+endfunction"}}}
+
+inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"

@@ -23,6 +23,7 @@ set wildignorecase
 
 " fold
 set foldmethod=syntax
+set foldopen-=block
 
 " file format
 set fileformat=unix
@@ -37,6 +38,9 @@ set noswapfile
 " allow cursor to move just past the end of the line
 set virtualedit=onemore
 
+" always use system clipboard
+set clipboard+=unnamedplus
+
 " automatic create directory when it doesn't exist
 augroup Mkdir
 	autocmd!
@@ -49,7 +53,7 @@ augroup END
 "─── User Interface ────────────────────────────────────────────────────────────
 " colorscheme
 set background=dark
-colorscheme gotham
+colorscheme fethoi
 
 " true color
 set termguicolors

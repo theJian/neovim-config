@@ -7,6 +7,11 @@ set cpoptions-=;
 " indent
 set smartindent
 
+" tab
+set softtabstop=4
+set tabstop=4
+set shiftwidth=4
+
 " mouse
 set mouse=nc
 
@@ -41,6 +46,9 @@ set virtualedit=onemore
 " always use system clipboard
 set clipboard+=unnamedplus
 
+" shows the effects of a command incrementally
+set inccommand=nosplit
+
 " automatic create directory when it doesn't exist
 augroup Mkdir
 	autocmd!
@@ -49,6 +57,15 @@ augroup Mkdir
 			\ call mkdir(expand("<afile>:p:h"), "p") |
 		\ endif
 augroup END
+
+" Show syntax highlighting groups for word under cursor
+nmap <C-S-P> :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
 
 "─── User Interface ────────────────────────────────────────────────────────────
 " colorscheme
@@ -142,10 +159,8 @@ nnoremap <leader>w :<C-u>w<CR>
 nnoremap <leader>e :e <C-R>=expand("%:h") . "/" <CR>
 
 " insert empty line
-nnoremap <CR> o<Esc>
-inoremap <C-j>  <Esc>o
-inoremap <C-CR> o<Esc>
-inoremap <C-CR> O<Esc>
+nnoremap <C-Enter> o<Esc>
+nnoremap <S-Enter> O<Esc>
 
 " split window
 nnoremap <leader>h :<C-u>split<CR>
@@ -183,19 +198,11 @@ vnoremap K :<C-u>m '<-2<CR>gv=gv
 " select last changed text
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
+" escape to normal mode in terminal
+tnoremap <Esc> <C-\><C-n>
+tnoremap jk <C-\><C-n>
+
 "─── Files Specified ───────────────────────────────────────────────────────────
-" Python
-autocmd FileType python setlocal tabstop=4 set softtabstop=4 shiftwidth=4 expandtab
-
-" JavaScript
-autocmd FileType javascript setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
-
-" CSS
-autocmd FileType css setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
-
-" HTML
-autocmd FileType html setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
-
 " Elm
 augroup file_elm
 	autocmd!

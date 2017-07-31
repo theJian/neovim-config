@@ -202,6 +202,15 @@ nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 tnoremap <Esc> <C-\><C-n>
 tnoremap jk <C-\><C-n>
 
+" command line editing
+cnoremap <C-h> <Left>
+cnoremap <C-l> <Right>
+cnoremap <C-j> <Down>
+cnoremap <C-k> <Up>
+
+" execute the last macro over the selection
+xnoremap @ :'<,'>:normal @@<CR>
+
 "─── Files Specified ───────────────────────────────────────────────────────────
 " Elm
 augroup file_elm

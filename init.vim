@@ -212,6 +212,9 @@ cnoremap <C-k> <Up>
 xnoremap @ :'<,'>:normal @@<CR>
 
 "─── Files Specified ───────────────────────────────────────────────────────────
+" automatically equalize splits when Vim is resized
+autocmd VimResized * wincmd =
+
 " Elm
 augroup file_elm
 	autocmd!

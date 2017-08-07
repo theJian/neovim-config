@@ -49,23 +49,9 @@ set clipboard+=unnamedplus
 " shows the effects of a command incrementally
 set inccommand=nosplit
 
-" automatic create directory when it doesn't exist
-augroup Mkdir
-	autocmd!
-	autocmd BufNewFile *
-				\ if !isdirectory(expand("<afile>:p:h")) |
-				\ call mkdir(expand("<afile>:p:h"), "p") |
-				\ endif
-augroup END
+" automatically equalize splits when Vim is resized
+autocmd VimResized * wincmd =
 
-" Show syntax highlighting groups for word under cursor
-nmap <C-S-P> :call <SID>SynStack()<CR>
-function! <SID>SynStack()
-	if !exists("*synstack")
-		return
-	endif
-	echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunc
 
 "─── User Interface ────────────────────────────────────────────────────────────
 " colorscheme
@@ -155,9 +141,6 @@ nnoremap k gk
 " save
 nnoremap <leader>w :<C-u>w<CR>
 
-" edit
-nnoremap <leader>e :e <C-R>=expand("%:h") . "/" <CR>
-
 " insert empty line
 nnoremap <C-Enter> o<Esc>
 nnoremap <S-Enter> O<Esc>
@@ -211,17 +194,24 @@ cnoremap <C-k> <Up>
 " execute the last macro over the selection
 xnoremap @ :'<,'>:normal @@<CR>
 
-"─── Files Specified ───────────────────────────────────────────────────────────
-" automatically equalize splits when Vim is resized
-autocmd VimResized * wincmd =
-
-" Elm
-augroup file_elm
+"─── User Scripts ──────────────────────────────────────────────────────────────
+" automatic create directory when it doesn't exist
+augroup Mkdir
 	autocmd!
-	autocmd BufNewFile,BufRead *.elm set tabstop=4
-	autocmd BufNewFile,BufRead *.elm set softtabstop=4
-	autocmd BufNewFile,BufRead *.elm set shiftwidth=4
+	autocmd BufNewFile *
+				\ if !isdirectory(expand("<afile>:p:h")) |
+				\ call mkdir(expand("<afile>:p:h"), "p") |
+				\ endif
 augroup END
+
+" Show syntax highlighting groups for word under cursor
+nmap <C-S-P> :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+	if !exists("*synstack")
+		return
+	endif
+	echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
 
 augroup HelpInTabs
 	autocmd!
@@ -236,12 +226,36 @@ function! HelpInNewTab()
 	endif
 endfunction
 
+function! FzyCommand(choice_command, vim_command)
+  try
+    let output = system(a:choice_command . " | fzy ")
+  catch /Vim:Interrupt/
+    " Swallow errors from ^C, allow redraw! below
+  endtry
+  redraw!
+  if v:shell_error == 0 && !empty(output)
+    exec a:vim_command . ' ' . output
+  endif
+endfunction
+
+nnoremap <leader>e :call FzyCommand("rg --files", ":e")<cr>
+
+"─── Files Specified ───────────────────────────────────────────────────────────
+" Elm
+augroup file_elm
+	autocmd!
+	autocmd BufNewFile,BufRead *.elm set tabstop=4
+	autocmd BufNewFile,BufRead *.elm set softtabstop=4
+	autocmd BufNewFile,BufRead *.elm set shiftwidth=4
+augroup END
+
 "─── Plugin Settings ───────────────────────────────────────────────────────────
 " run deoplete at start up
 let g:deoplete#enable_at_startup = 1
 
 " deoplete key mapping
 inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : deoplete#mappings#manual_complete()
+inoremap <silent><expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 function! s:check_back_space() abort "{{{
 	let col = col('.') - 1
 	return !col || getline('.')[col - 1]  =~ '\s'

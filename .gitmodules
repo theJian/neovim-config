@@ -1,3 +1,9 @@
 [submodule "pack/nvim/start/deoplete.nvim"]
 	path = pack/nvim/start/deoplete.nvim
 	url = https://github.com/Shougo/deoplete.nvim.git
+[submodule "pack/nvim/start/ultisnips"]
+	path = pack/nvim/start/ultisnips
+	url = https://github.com/SirVer/ultisnips.git
+[submodule "pack/nvim/start/vim-commentary"]
+	path = pack/nvim/start/vim-commentary
+	url = https://github.com/tpope/vim-commentary.git

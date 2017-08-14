@@ -252,6 +252,9 @@ augroup END
 "─── Plugin Settings ───────────────────────────────────────────────────────────
 " run deoplete at start up
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_camel_case = 1
+let g:deoplete#max_list = 20
+let g:deoplete#auto_complete_delay = 100
 
 " deoplete key mapping
 inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : deoplete#mappings#manual_complete()
@@ -263,3 +266,20 @@ endfunction"}}}
 
 inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+
+" deoplete completion
+" let g:deoplete#omni#functions = {}
+" let g:deoplete#omni#functions.javascript = [
+" 			\ 'tern#Complete',
+" 			\ 'jspc#omni'
+" 			\]
+
+let g:deoplete#sources = {}
+let g:deoplete#sources.javascript = ['buffer', 'ultisnips', 'ternjs']
+
+" ultisnips
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsListSnippets="<c-l>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:UltiSnipsEditSplit="vertical"

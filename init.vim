@@ -127,6 +127,8 @@ set fillchars+=fold:┄
 " wrapped line mark
 set showbreak=↪\ \ \ 
 
+" auto close preview window
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 "─── Key Mapping ───────────────────────────────────────────────────────────────
 " leader
 let mapleader="\<space>"
@@ -268,14 +270,16 @@ inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
 
 " deoplete completion
-" let g:deoplete#omni#functions = {}
-" let g:deoplete#omni#functions.javascript = [
-" 			\ 'tern#Complete',
-" 			\ 'jspc#omni'
-" 			\]
+let g:deoplete#omni#functions = {}
+let g:deoplete#omni#functions.javascript = [
+			\ 'tern#Complete',
+			\ 'jspc#omni'
+			\]
 
-let g:deoplete#sources = {}
-let g:deoplete#sources.javascript = ['buffer', 'ultisnips', 'ternjs']
+let g:deoplete#sources#ternjs#types = 1
+let g:deoplete#sources#ternjs#depths = 1
+let g:deoplete#sources#ternjs#docs = 1
+let g:deoplete#sources#ternjs#include_keywords = 1
 
 " ultisnips
 let g:UltiSnipsExpandTrigger="<c-j>"

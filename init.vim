@@ -137,8 +137,8 @@ let mapleader="\<space>"
 inoremap jk <Esc>
 
 " treat long lines as break lines
-nnoremap j gj
-nnoremap k gk
+nnoremap <silent> j :<C-u>execute 'normal!' (v:count > 1 ? "m'" . v:count : 'g') . 'j'<CR>
+nnoremap <silent> k :<C-u>execute 'normal!' (v:count > 1 ? "m'" . v:count : 'g') . 'k'<CR>
 
 " save
 nnoremap <leader>w :<C-u>w<CR>
@@ -267,7 +267,7 @@ function! s:check_back_space() abort "{{{
 endfunction"}}}
 
 inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS>  deoplete#close_popup()."\<C-h>"
 
 " deoplete completion
 let g:deoplete#omni#functions = {}
@@ -287,3 +287,8 @@ let g:UltiSnipsListSnippets="<c-l>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 let g:UltiSnipsEditSplit="vertical"
+
+" delimitMate
+let delimitMate_expand_cr = 1
+let delimitMate_expand_space = 1
+let delimitMate_jump_expansion = 1

@@ -275,6 +275,9 @@ let g:deoplete#omni#functions.javascript = [
 			\ 'tern#Complete',
 			\ 'jspc#omni'
 			\]
+let g:deoplete#omni#functions.elm = ['elm#Complete']
+let g:deoplete#omni#input_patterns = {}
+let g:deoplete#omni#input_patterns.elm = '[^ \t]+'
 
 let g:deoplete#sources#ternjs#types = 1
 let g:deoplete#sources#ternjs#depths = 1
@@ -292,3 +295,6 @@ let g:UltiSnipsEditSplit="vertical"
 let delimitMate_expand_cr = 1
 let delimitMate_expand_space = 1
 let delimitMate_jump_expansion = 1
+
+" elm-vim
+let g:elm_setup_keybindings = 0

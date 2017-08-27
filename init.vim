@@ -242,15 +242,6 @@ endfunction
 
 nnoremap <leader>e :call FzyCommand("rg --files", ":e")<cr>
 
-"─── Files Specified ───────────────────────────────────────────────────────────
-" Elm
-augroup file_elm
-	autocmd!
-	autocmd BufNewFile,BufRead *.elm set tabstop=4
-	autocmd BufNewFile,BufRead *.elm set softtabstop=4
-	autocmd BufNewFile,BufRead *.elm set shiftwidth=4
-augroup END
-
 "─── Plugin Settings ───────────────────────────────────────────────────────────
 " run deoplete at start up
 let g:deoplete#enable_at_startup = 1

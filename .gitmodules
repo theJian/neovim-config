@@ -19,6 +19,3 @@
 [submodule "pack/nvim/start/delimitMate"]
 	path = pack/nvim/start/delimitMate
 	url = https://github.com/Raimondi/delimitMate.git
-[submodule "pack/nvim/start/elm-vim"]
-	path = pack/nvim/start/elm-vim
-	url = https://github.com/ElmCast/elm-vim.git

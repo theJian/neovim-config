@@ -276,6 +276,7 @@ let g:deoplete#sources#ternjs#docs = 1
 let g:deoplete#sources#ternjs#include_keywords = 1
 
 " ultisnips
+let g:UltiSnipsSnippetDirectories=[$HOME.'/.config/nvim/UltiSnips']
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsListSnippets="<c-l>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"

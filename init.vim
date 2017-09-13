@@ -266,9 +266,6 @@ let g:deoplete#omni#functions.javascript = [
 			\ 'tern#Complete',
 			\ 'jspc#omni'
 			\]
-let g:deoplete#omni#functions.elm = ['elm#Complete']
-let g:deoplete#omni#input_patterns = {}
-let g:deoplete#omni#input_patterns.elm = '[^ \t]+'
 
 let g:deoplete#sources#ternjs#types = 1
 let g:deoplete#sources#ternjs#depths = 1

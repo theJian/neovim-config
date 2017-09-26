@@ -16,3 +16,6 @@
 [submodule "pack/nvim/start/editorconfig-vim"]
 	path = pack/nvim/start/editorconfig-vim
 	url = https://github.com/editorconfig/editorconfig-vim.git
+[submodule "pack/nvim/start/lexima.vim"]
+	path = pack/nvim/start/lexima.vim
+	url = https://github.com/cohama/lexima.vim.git

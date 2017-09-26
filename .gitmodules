@@ -16,6 +16,3 @@
 [submodule "pack/nvim/start/editorconfig-vim"]
 	path = pack/nvim/start/editorconfig-vim
 	url = https://github.com/editorconfig/editorconfig-vim.git
-[submodule "pack/nvim/start/delimitMate"]
-	path = pack/nvim/start/delimitMate
-	url = https://github.com/Raimondi/delimitMate.git

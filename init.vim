@@ -36,6 +36,9 @@ set fileformat=unix
 " line break at `breakat` characters
 set linebreak
 
+" hide changed buffers instead close
+set hidden
+
 " no backup file, no swap file
 set nobackup
 set noswapfile
@@ -240,7 +243,7 @@ function! FzyCommand(choice_command, vim_command)
   endif
 endfunction
 
-nnoremap <leader>e :call FzyCommand("rg --files", ":e")<cr>
+nnoremap <leader>f :call FzyCommand("rg --files", ":e")<cr>
 
 "─── Plugin Settings ───────────────────────────────────────────────────────────
 " run deoplete at start up

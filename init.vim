@@ -250,7 +250,6 @@ nnoremap <leader>f :call FzyCommand("rg --files", ":e")<cr>
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_camel_case = 1
 let g:deoplete#max_list = 20
-let g:deoplete#auto_complete_delay = 100
 
 " deoplete key mapping
 inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : deoplete#mappings#manual_complete()
@@ -262,13 +261,6 @@ endfunction"}}}
 
 inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS>  deoplete#close_popup()."\<C-h>"
-
-" deoplete completion
-let g:deoplete#omni#functions = {}
-let g:deoplete#omni#functions.javascript = [
-			\ 'tern#Complete',
-			\ 'jspc#omni'
-			\]
 
 let g:deoplete#sources#ternjs#types = 1
 let g:deoplete#sources#ternjs#depths = 1
@@ -282,11 +274,3 @@ let g:UltiSnipsListSnippets="<c-l>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 let g:UltiSnipsEditSplit="vertical"
-
-" delimitMate
-let delimitMate_expand_cr = 1
-let delimitMate_expand_space = 1
-let delimitMate_jump_expansion = 1
-
-" elm-vim
-let g:elm_setup_keybindings = 0

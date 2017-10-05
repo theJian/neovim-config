@@ -29,6 +29,7 @@ set wildignorecase
 " fold
 set foldmethod=syntax
 set foldopen-=block
+set foldlevelstart=4
 
 " file format
 set fileformat=unix

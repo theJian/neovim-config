@@ -8,6 +8,7 @@ set cpoptions-=;
 set smartindent
 
 " tab
+set expandtab
 set softtabstop=4
 set tabstop=4
 set shiftwidth=4
@@ -68,8 +69,8 @@ set termguicolors
 " show invisible chars
 set list
 set listchars=tab:›\ ,trail:•,extends:§,nbsp:•
-highlight NonText    ctermfg=12
-highlight SpecialKey ctermfg=12
+highlight NonText    ctermfg=12 guifg=#2F3740
+highlight SpecialKey ctermfg=12 guifg=#2F3740
 
 " show match
 set showmatch
@@ -91,16 +92,15 @@ set guifont=Inconsolata:h16
 set guioptions=av
 
 " statusline
+highlight User1 ctermfg=red guifg=red
 set statusline=%f " file path
 set statusline+=%1*%m%*%r%h%w "file info
 set statusline+=%= "switch to the right side
 set statusline+=(%{&ff}/%Y) " file type
 set statusline+=\  " separator
-set statusline+=(line\ %l\/%L,\ col\ %c) " cusor position
+set statusline+=(line\ %l\/%L,\ col\ %c) " cursor position
 set statusline+=\  " seperator
 set statusline+=%<%P " percentage
-" highlight modified flag
-highlight User1 ctermfg=red guifg=red
 
 " highlight cursor position
 set cursorcolumn
@@ -274,4 +274,8 @@ let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsListSnippets="<c-l>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-let g:UltiSnipsEditSplit="vertical"
+
+" delimitMate		
+let delimitMate_expand_cr = 1		
+let delimitMate_expand_space = 1		
+let delimitMate_jump_expansion = 1

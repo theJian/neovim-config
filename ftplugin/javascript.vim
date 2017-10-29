@@ -11,6 +11,3 @@ setlocal suffixesadd=.js
 
 " tab
 setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
-
-execute 'packadd' 'deoplete-ternjs'
-execute 'packadd' 'jspc.vim'

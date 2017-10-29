@@ -1,24 +1,12 @@
-[submodule "pack/nvim/start/deoplete.nvim"]
-	path = pack/nvim/start/deoplete.nvim
-	url = https://github.com/Shougo/deoplete.nvim.git
 [submodule "pack/nvim/start/ultisnips"]
 	path = pack/nvim/start/ultisnips
 	url = https://github.com/SirVer/ultisnips.git
 [submodule "pack/nvim/start/vim-commentary"]
 	path = pack/nvim/start/vim-commentary
 	url = https://github.com/tpope/vim-commentary.git
-[submodule "pack/nvim/opt/deoplete-ternjs"]
-	path = pack/nvim/opt/deoplete-ternjs
-	url = https://github.com/carlitux/deoplete-ternjs.git
-[submodule "pack/nvim/opt/jspc.vim"]
-	path = pack/nvim/opt/jspc.vim
-	url = https://github.com/othree/jspc.vim.git
 [submodule "pack/nvim/start/editorconfig-vim"]
 	path = pack/nvim/start/editorconfig-vim
 	url = https://github.com/editorconfig/editorconfig-vim.git
-[submodule "pack/nvim/opt/autocomplete-flow"]
-	path = pack/nvim/opt/autocomplete-flow
-	url = https://github.com/wokalski/autocomplete-flow.git
 [submodule "pack/nvim/start/delimitMate"]
 	path = pack/nvim/start/delimitMate
 	url = https://github.com/Raimondi/delimitMate.git

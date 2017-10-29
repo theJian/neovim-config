@@ -57,6 +57,8 @@ set inccommand=nosplit
 " automatically equalize splits when Vim is resized
 autocmd VimResized * wincmd =
 
+" format options
+set formatoptions+=ro
 
 "─── User Interface ────────────────────────────────────────────────────────────
 " colorscheme
@@ -247,26 +249,6 @@ endfunction
 nnoremap <leader>f :call FzyCommand("rg --files", ":e")<cr>
 
 "─── Plugin Settings ───────────────────────────────────────────────────────────
-" run deoplete at start up
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_camel_case = 1
-let g:deoplete#max_list = 20
-
-" deoplete key mapping
-inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : deoplete#mappings#manual_complete()
-inoremap <silent><expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
-function! s:check_back_space() abort "{{{
-	let col = col('.') - 1
-	return !col || getline('.')[col - 1]  =~ '\s'
-endfunction"}}}
-
-inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS>  deoplete#close_popup()."\<C-h>"
-
-let g:deoplete#sources#ternjs#types = 1
-let g:deoplete#sources#ternjs#depths = 1
-let g:deoplete#sources#ternjs#docs = 1
-let g:deoplete#sources#ternjs#include_keywords = 1
 
 " ultisnips
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.config/nvim/UltiSnips']

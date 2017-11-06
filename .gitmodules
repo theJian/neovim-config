@@ -10,3 +10,6 @@
 [submodule "pack/nvim/start/delimitMate"]
 	path = pack/nvim/start/delimitMate
 	url = https://github.com/Raimondi/delimitMate.git
+[submodule "pack/nvim/start/completor.vim"]
+	path = pack/nvim/start/completor.vim
+	url = https://github.com/maralla/completor.vim.git

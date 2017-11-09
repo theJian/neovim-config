@@ -12,6 +12,7 @@ set expandtab
 set softtabstop=4
 set tabstop=4
 set shiftwidth=4
+set shiftround
 
 " mouse
 set mouse=nc
@@ -53,9 +54,6 @@ set clipboard+=unnamedplus
 
 " shows the effects of a command incrementally
 set inccommand=nosplit
-
-" automatically equalize splits when Vim is resized
-autocmd VimResized * wincmd =
 
 " format options
 set formatoptions+=ro
@@ -111,12 +109,6 @@ set cursorline
 " minimal number of screen lines to keep
 set scrolloff=2
 
-" only have cursorline in current window
-autocmd WinLeave * set nocursorline
-autocmd WinLeave * set nocursorcolumn
-autocmd WinEnter * set cursorline
-autocmd WinEnter * set cursorcolumn
-
 " show line number
 set number
 set relativenumber
@@ -133,8 +125,6 @@ set fillchars+=fold:┄
 " wrapped line mark
 set showbreak=↪\ \ \ 
 
-" auto close preview window
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 "─── Key Mapping ───────────────────────────────────────────────────────────────
 " leader
 let mapleader="\<space>"
@@ -203,47 +193,64 @@ cnoremap <C-k> <Up>
 xnoremap @ :'<,'>:normal @@<CR>
 
 "─── User Scripts ──────────────────────────────────────────────────────────────
+
+" automatically equalize splits when Vim is resized
+augroup Resize
+    autocmd!
+    autocmd VimResized * wincmd =
+augroup END
+
+" only have cursorline in current window
+augroup CursorLine
+    autocmd!
+    autocmd winleave * set nocursorline
+    autocmd winleave * set nocursorcolumn
+    autocmd winenter * set cursorline
+    autocmd winenter * set cursorcolumn
+augroup END
+
 " automatic create directory when it doesn't exist
 augroup Mkdir
-	autocmd!
-	autocmd BufNewFile *
-				\ if !isdirectory(expand("<afile>:p:h")) |
-				\ call mkdir(expand("<afile>:p:h"), "p") |
-				\ endif
+    autocmd!
+    autocmd BufNewFile *
+                \ if !isdirectory(expand("<afile>:p:h")) |
+                \ call mkdir(expand("<afile>:p:h"), "p") |
+                \ endif
+augroup END
+
+" Open help file in new tab
+augroup HelpInTabs
+    autocmd!
+    autocmd BufEnter *.txt call HelpInNewTab()
 augroup END
 
 " Show syntax highlighting groups for word under cursor
-nmap <C-S-P> :call <SID>SynStack()<CR>
+nnoremap <C-S-P> :call <SID>SynStack()<CR>
 function! <SID>SynStack()
-	if !exists("*synstack")
-		return
-	endif
-	echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+    if !exists("*synstack")
+        return
+    endif
+    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
-
-augroup HelpInTabs
-	autocmd!
-	autocmd BufEnter *.txt call HelpInNewTab()
-augroup END
 
 " only apply to help files
 function! HelpInNewTab()
-	if &buftype == 'help'
-		" convert help window to tab
-		execute "normal \<C-W>T"
-	endif
+    if &buftype == 'help'
+        " convert help window to tab
+        execute "normal \<C-W>T"
+    endif
 endfunction
 
 function! FzyCommand(choice_command, vim_command)
-  try
-    let output = system(a:choice_command . " | fzy ")
-  catch /Vim:Interrupt/
-    " Swallow errors from ^C, allow redraw! below
-  endtry
-  redraw!
-  if v:shell_error == 0 && !empty(output)
-    exec a:vim_command . ' ' . output
-  endif
+    try
+        let output = system(a:choice_command . " | fzy ")
+    catch /Vim:Interrupt/
+        " Swallow errors from ^C, allow redraw! below
+    endtry
+    redraw!
+    if v:shell_error == 0 && !empty(output)
+        exec a:vim_command . ' ' . output
+    endif
 endfunction
 
 nnoremap <leader>f :call FzyCommand("rg --files", ":e")<cr>

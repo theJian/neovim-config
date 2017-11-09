@@ -93,7 +93,7 @@ set guioptions=av
 
 " statusline
 highlight User1 ctermfg=red guifg=red
-set statusline=%f " file path
+set statusline=%.42f " file path
 set statusline+=%1*%m%*%r%h%w "file info
 set statusline+=%= "switch to the right side
 set statusline+=(%{&ff}/%Y) " file type
@@ -190,7 +190,19 @@ cnoremap <C-j> <Down>
 cnoremap <C-k> <Up>
 
 " execute the last macro over the selection
-xnoremap @ :'<,'>:normal @@<CR>
+xnoremap @ :'<,'>:normal! @@<CR>
+
+" operator pending mappings
+onoremap in( :<c-u>normal! f(vi(<CR>
+onoremap in{ :<c-u>normal! f{vi{<CR>
+onoremap in[ :<c-u>normal! f[vi[<CR>
+onoremap in" :<c-u>normal! f"vi"<CR>
+onoremap in' :<c-u>normal! f'vi'<CR>
+onoremap an( :<c-u>normal! f(va(<CR>
+onoremap an{ :<c-u>normal! f{va{<CR>
+onoremap an[ :<c-u>normal! f[va[<CR>
+onoremap an" :<c-u>normal! f"va"<CR>
+onoremap an' :<c-u>normal! f'va'<CR>
 
 "─── User Scripts ──────────────────────────────────────────────────────────────
 
@@ -237,7 +249,7 @@ endfunc
 function! HelpInNewTab()
     if &buftype == 'help'
         " convert help window to tab
-        execute "normal \<C-W>T"
+        execute "normal! \<C-W>T"
     endif
 endfunction
 

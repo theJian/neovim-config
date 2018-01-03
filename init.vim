@@ -29,7 +29,6 @@ set smartcase
 set wildignorecase
 
 " fold
-set foldmethod=syntax
 set foldopen-=block
 set foldlevelstart=4
 
